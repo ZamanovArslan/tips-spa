@@ -1,24 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import Header from './components/Header';
+import { Container, Row } from "react-bootstrap";
+import { Switch, Route, Redirect } from 'react-router-dom';
+import SignIn from "./components/SignIn";
+import Alerts from "./components/Alerts";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header/>
+      <Container className="mt-4">
+        <Alerts />
+        <Row className="justify-content-md-center">
+          <Switch>
+            <Route path="/signin" component={SignIn}/>
+          </Switch>
+        </Row>
+      </Container>
     </div>
   );
 }
