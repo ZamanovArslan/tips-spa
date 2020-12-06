@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
-import { AUTH_TOKEN } from '../constants';
+import { AUTH_TOKEN, CURRENT_USER } from '../constants';
 import { gql } from '@apollo/client';
 import { Mutation } from "@apollo/client/react/components";
 import { Col, Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
-import { addAlert } from '../store/actionCreators/addAlert';
+import { addAlert } from '../store/actionCreators/alerts';
 
 const SIGN_IN_MUTATION = gql`
     mutation SignIn($email: String!, $password: String!) {
         signin(email: $email, password: $password) {
             accessToken
+            me {
+                id
+                email
+                firstName
+                lastName
+            }
         }
     }
 `
@@ -22,6 +28,7 @@ class SignIn extends Component {
 
   render() {
     const {email, password} = this.state
+
     return (
       <Col md="4">
         <h4>Sign In</h4>
@@ -67,18 +74,26 @@ class SignIn extends Component {
   }
 
   _confirm = async data => {
-    const {token} = data.signin
-    this._saveUserData(token)
+    const {me} = data.signin
+    const {accessToken} = data.signin
+
+    this.setState({current_user: me})
+    this._saveToken(accessToken)
+    this._saveUserData(me)
     this._addSuccessfulLoginMessage()
     this.props.history.push(`/`)
   }
 
   _addSuccessfulLoginMessage = () => {
-    this.props.dispatch(addAlert("Successful Login", "success"));
+    this.props.dispatch(addAlert(`Successful Login ${this.state.current_user.firstName}`, "success"));
   }
 
-  _saveUserData = token => {
+  _saveToken = token => {
     localStorage.setItem(AUTH_TOKEN, token)
+  }
+
+  _saveUserData = data => {
+    localStorage.setItem(CURRENT_USER, data)
   }
 }
 

@@ -25,9 +25,10 @@ function Header() {
         </Nav.Item>
         <Nav.Item className="ml-auto">
           <Nav.Link as="div">
-            <Link to="/signin">
-              Sign In
-            </Link>
+            {localStorage.getItem("auth-token")
+              ? <Link to="/signout">Sign Out</Link>
+              : <Link to="/signin">Sign In</Link>
+            }
           </Nav.Link>
         </Nav.Item>
       </Nav>

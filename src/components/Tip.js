@@ -1,17 +1,15 @@
-import { Card } from "react-bootstrap";
+import { Card, Button, Row } from "react-bootstrap";
 
-function Tip() {
+function Tip(props) {
+  const tip = props.data
+
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card style={{ width: '20rem', margin: '20px' }}>
       <Card.Body>
-        <Card.Title>Card Title</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the bulk of
-          the card's content.
-        </Card.Text>
-        <Card.Link href="#">Card Link</Card.Link>
-        <Card.Link href="#">Another Link</Card.Link>
+        <Card.Title>{tip.title}</Card.Title>
+        <Card.Subtitle className="mb-2 text-muted">{tip.createdAt}</Card.Subtitle>
+        <Card.Text>{tip.description}</Card.Text>
+        <Button variant="primary">Show</Button>
       </Card.Body>
     </Card>
   );

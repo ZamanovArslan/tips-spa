@@ -8,9 +8,11 @@ function alertReducer(state = initialState, action) {
 
   switch (type) {
     case 'ADD_ALERT':
-      return {...state, alerts: [...state.alerts, payload]};
+      if (alerts.filter(alert => alert.message === payload.message).length > 0) return state;
+
+      return {...state, alerts: [...alerts, payload]};
     case 'REMOVE_ALERT':
-      return {...state, alerts: alerts.filter(alert => alert.id !== payload) }
+      return {...state, alerts: alerts.filter(alert => alert.id !== payload.id) }
 
     default:
       return state;
