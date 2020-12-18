@@ -1,6 +1,7 @@
 import { Card, Nav } from "react-bootstrap";
 import SearchInput from "./SearchInput";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
+import { AUTH_TOKEN } from "../constants";
 
 function Header() {
   return (
@@ -26,7 +27,7 @@ function Header() {
         <Nav.Item className="ml-auto">
           <Nav.Link as="div">
             {localStorage.getItem("auth-token")
-              ? <Link to="/signout">Sign Out</Link>
+              ? <Link to="/signout" onClick={(e) => localStorage.removeItem(AUTH_TOKEN)}>Sign Out</Link>
               : <Link to="/signin">Sign In</Link>
             }
           </Nav.Link>

@@ -3,7 +3,7 @@ import TipList from "./TipList";
 
 const SEARCH_QUERY = gql`
     query Tips($query: String!){
-        tips(title: $query){
+        tips(keyword: $query){
             anonym
             description
             experience
